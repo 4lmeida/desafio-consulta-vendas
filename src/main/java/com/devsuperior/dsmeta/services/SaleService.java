@@ -3,7 +3,9 @@ package com.devsuperior.dsmeta.services;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SaleReportDTO;
+import com.devsuperior.dsmeta.dto.SaleSummaryDTO;
 import com.devsuperior.dsmeta.entities.Sale;
-import com.devsuperior.dsmeta.projections.SaleReportProjection;
 import com.devsuperior.dsmeta.repositories.SaleRepository;
 
 @Service
@@ -36,14 +38,15 @@ public class SaleService {
 		return result.map(x -> new SaleReportDTO(x));
 	}
 	
-	/*public List<SaleSummaryDTO> getSummary(String dateMin, String dateMax) {
+	public List<SaleSummaryDTO> getSummary(String dateMin, String dateMax) {
 		LocalDate min = convertMinDate(dateMin);
 		LocalDate max = convertMaxDate(dateMax);
 
 		List<Sale> result = repository.searchSummary(min, max);
 		
-		return result.stream().map(x -> new SaleSummaryDTO(x)).collect(Collectors.toList());
-	}*/
+		return result.stream().map(x -> new SaleSummaryDTO(x)).collect(Collectors.toList());	
+	}
+	
 	
 	private LocalDate convertMaxDate(String dateMax) {
 		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());

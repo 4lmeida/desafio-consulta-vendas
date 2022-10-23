@@ -32,33 +32,18 @@ public class SaleReportDTO {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public LocalDate getDate() {
 		return date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
 	}
 
 	public Double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
 	public String getSellerName() {
 		return sellerName;
 	}
 
-	public void setSellerName(String sellerName) {
-		this.sellerName = sellerName;
-	}
 	
 	
 	

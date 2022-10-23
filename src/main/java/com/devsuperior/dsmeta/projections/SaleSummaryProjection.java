@@ -2,6 +2,6 @@ package com.devsuperior.dsmeta.projections;
 
 public interface SaleSummaryProjection {
 	
-	String getName();
+	String getNameSeller();
 	Double getAmount();
 }

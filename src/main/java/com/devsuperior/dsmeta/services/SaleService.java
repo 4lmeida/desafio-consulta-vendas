@@ -3,9 +3,11 @@ package com.devsuperior.dsmeta.services;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +46,7 @@ public class SaleService {
 
 		List<Sale> result = repository.searchSummary(min, max);
 		
-		return result.stream().map(x -> new SaleSummaryDTO(x)).collect(Collectors.toList());	
+		return summarySeller(result);
 	}
 	
 	
@@ -61,5 +63,24 @@ public class SaleService {
 		return min;
 	}
 	
+	public List<SaleSummaryDTO> summarySeller(List<Sale> seller) {
+		
+		List<SaleSummaryDTO> list = new ArrayList<>();
+		
+		Map<String, Double> map = new TreeMap<>();
+		for(Sale sl  : seller) {
+			map.put(sl.getSeller().getName(), 0.0);
+		}
+			
+		for(String sl : map.keySet()) {
+			double total = seller.stream()
+					.filter(s -> s.getSeller().getName().equals(sl))
+					.map(s -> s.getAmount()).reduce(0.0, (x, y) -> x + y);
+			
+			list.add(new SaleSummaryDTO(sl, total));
+		}
+		
+		return list;
+	}
 	
 }
